@@ -13,7 +13,7 @@ public class EmailService {
     @Value("${sendgrid.api.key}")
     private String apiKey;
 
-    private static final String FROM_EMAIL = "your_verified_email@connectiva.com";
+    private static final String FROM_EMAIL = "johane@fiza.events";
 
     public void sendEmail(Lead lead) {
 
