@@ -1,26 +1,29 @@
 package com.connectiva.email_system.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "leads")
 public class Lead {
 
-    private String email;
-    private String name;
-    private String company;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "lead_id")
+    private Integer leadId;
 
-    public Lead(String email, String name, String company) {
-        this.email = email;
-        this.name = name;
-        this.company = company;
-    }
+    @Column(name = "event_id")
+    private String eventId;
 
-    public String getEmail() {
-        return email;
-    }
+    @Column(name = "email_campaign")
+    private Boolean emailCampaign;
 
-    public String getName() {
-        return name;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id")
+    private Person person;
 
-    public String getCompany() {
-        return company;
-    }
+    // Getters
+    public Integer getLeadId() { return leadId; }
+    public String getEventId() { return eventId; }
+    public Boolean getEmailCampaign() { return emailCampaign; }
+    public Person getPerson() { return person; }
 }
