@@ -1,6 +1,11 @@
 FROM eclipse-temurin:17-jdk
 
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+WORKDIR /app
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+COPY . .
+
+RUN ./mvnw clean package -DskipTests
+
+EXPOSE 8080
+
+CMD ["java","-jar","target/*.jar"]
