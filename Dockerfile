@@ -1,14 +1,12 @@
-FROM eclipse-temurin:17-jdk
-
+# Build stage
+FROM maven:3.9.9-eclipse-temurin-17 AS build
 WORKDIR /app
-
-# Install Maven inside container
-RUN apt-get update && apt-get install -y maven
-
 COPY . .
-
 RUN mvn clean package -DskipTests
 
+# Runtime stage (smaller image)
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-
-CMD ["java","-jar","target/*.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
